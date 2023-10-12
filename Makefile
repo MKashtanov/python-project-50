@@ -15,5 +15,10 @@ lint:
 install:
 	poetry install
 
+check: selfcheck test lint
+
 test:
-	poetry run gendiff ./tmp/file1.json ./tmp/file2.json
+	poetry run pytest
+
+test-coverage:
+	poetry run pytest --cov=gendiff --cov-report xml
