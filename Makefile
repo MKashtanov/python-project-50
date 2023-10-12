@@ -15,7 +15,7 @@ lint:
 install:
 	poetry install
 
-check: selfcheck test lint
+check: check test lint
 
 test:
 	poetry run pytest
