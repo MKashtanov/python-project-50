@@ -5,3 +5,10 @@
 
 [![Test Coverage](https://api.codeclimate.com/v1/badges/dd587f9a2e313ca9e306/test_coverage)](https://codeclimate.com/github/MKashtanov/python-project-50/test_coverage)
 
+### How to install gendiff:
+
+[![asciicast](https://asciinema.org/a/1GKOZwcgGxEUo1e8cJoLMXtRH.svg)](https://asciinema.org/a/1GKOZwcgGxEUo1e8cJoLMXtRH)
+
+### Compare two files:
+
+[![asciicast](https://asciinema.org/a/I6mmBlddbu8kWAvXZXH58Ookl.svg)](https://asciinema.org/a/I6mmBlddbu8kWAvXZXH58Ookl)

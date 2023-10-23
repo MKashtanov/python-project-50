@@ -1,5 +1,5 @@
 from pathlib import Path
-from gendiff.scripts.gendiff import generate_diff
+from gendiff.gendiff import generate_diff
 import pytest
 
 
@@ -10,6 +10,8 @@ def get_path(file_name):
 
 test_data = [
     ('file1.json', 'file2.json', 'result_file1_file2'),
+    ('file1.yml', 'file2.yml', 'result_file1_file2'),
+    ('file1.json', 'file2.yml', 'result_file1_file2'),
     ]
 
 @pytest.mark.parametrize('file1, file2, result_file', test_data)
