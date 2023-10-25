@@ -12,3 +12,7 @@
 ### Compare two files:
 
 [![asciicast](https://asciinema.org/a/I6mmBlddbu8kWAvXZXH58Ookl.svg)](https://asciinema.org/a/I6mmBlddbu8kWAvXZXH58Ookl)
+
+### Use with nested structures  
+
+[![asciicast](https://asciinema.org/a/3SoUNhl91ZI0TCZ2byrgBHaPO.svg)](https://asciinema.org/a/3SoUNhl91ZI0TCZ2byrgBHaPO)
