@@ -9,28 +9,44 @@ def format_stylish(diff):
         if isinstance(current_diff, list):
             for item in current_diff:
                 if item['status'] == 'nested':
-                    result.append(f'{separator}{item["key"]}: {inner(item["nested"], level + 1)}')
+                    result.append(f'{separator}{item["key"]}: '
+                                  f'{inner(item["nested"], level + 1)}')
                 elif item['status'] == 'equal':
-                    result.append(f'{separator}{item["key"]}: {item["old_value"]}')
+                    result.append(f'{separator}{item["key"]}: '
+                                  f'{item["old_value"]}')
                 elif item['status'] == 'different':
                     if 'old_value' in item.keys():
                         if isinstance(item.get('old_value'), dict):
-                            result.append(f'{separator[:-2]}- {item["key"]}: {inner(item.get("old_value"), level + 1)}')
+                            result.append(
+                                f'{separator[:-2]}- {item["key"]}: '
+                                f'{inner(item.get("old_value"), level + 1)}')
                         else:
-                            result.append(f'{separator[:-2]}- {item["key"]}: {resolve_to_string(item.get("old_value"))}')
+                            result.append(
+                                f'{separator[:-2]}- {item["key"]}: '
+                                f'{resolve_to_string(item.get("old_value"))}'
+                            )
                     if 'new_value' in item.keys():
                         if isinstance(item.get('new_value'), dict):
-                            result.append(f'{separator[:-2]}+ {item["key"]}: {inner(item.get("new_value"), level + 1)}')
+                            result.append(
+                                f'{separator[:-2]}+ {item["key"]}: '
+                                f'{inner(item.get("new_value"), level + 1)}'
+                            )
                         else:
-                            result.append(f'{separator[:-2]}+ {item["key"]}: {resolve_to_string(item.get("new_value"))}')
+                            result.append(
+                                f'{separator[:-2]}+ {item["key"]}: '
+                                f'{resolve_to_string(item.get("new_value"))}'
+                            )
         elif isinstance(current_diff, dict):
             for key in sorted(list(current_diff.keys())):
                 value = current_diff.get(key)
                 if isinstance(value, dict):
-                    result.append(f'{separator}{key}: {inner(value, level + 1)}')
+                    result.append(
+                        f'{separator}{key}: {inner(value, level + 1)}'
+                    )
                 else:
                     result.append(f'{separator}{key}: {value}')
-        return '{\n' + '\n'.join(result) + '\n' + get_full_separator(level - 1) + '}'
+        return ('{\n' + '\n'.join(result) + '\n' +
+                get_full_separator(level - 1) + '}')
 
     return inner(diff, 1)
 
