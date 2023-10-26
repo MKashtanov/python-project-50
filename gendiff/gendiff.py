@@ -2,7 +2,8 @@
 import json
 import yaml
 import os
-import gendiff.formater as Formater
+from gendiff.formater.stylish import format_stylish
+from gendiff.formater.plain import format_plain
 
 
 def file_to_dict(path):
@@ -16,11 +17,11 @@ def file_to_dict(path):
     return result
 
 
-def generate_diff(file_path1, file_path2, formater='stylish'):
+def generate_diff(file_path1, file_path2, format_name='stylish'):
     dict1 = file_to_dict(file_path1)
     dict2 = file_to_dict(file_path2)
     diff = create_diff(dict1, dict2)
-    return get_diff_format(diff, formater)
+    return get_diff_format(diff, format_name)
 
 
 def create_diff(tree1, tree2):
@@ -56,9 +57,11 @@ def compare_values(value1, value2):
     return result
 
 
-def get_diff_format(diff, formater='stylish'):
-    if formater == 'stylish':
-        return Formater.format_stylish(diff)
+def get_diff_format(diff, format_name='stylish'):
+    if format_name == 'stylish':
+        return format_stylish(diff)
+    elif format_name == 'plain':
+        return format_plain(diff)
 
 
 # if __name__ == '__main__':

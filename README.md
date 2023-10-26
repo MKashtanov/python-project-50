@@ -16,3 +16,11 @@
 ### Use with nested structures  
 
 [![asciicast](https://asciinema.org/a/3SoUNhl91ZI0TCZ2byrgBHaPO.svg)](https://asciinema.org/a/3SoUNhl91ZI0TCZ2byrgBHaPO)
+
+### It can return result in some formats:
+- 'stylish' - by default
+- 'plain'
+
+### Use with format 'plain'
+
+[![asciicast](https://asciinema.org/a/Ju9cM4TmHHQo7POC5V4L3ZDVi.svg)](https://asciinema.org/a/Ju9cM4TmHHQo7POC5V4L3ZDVi)
