@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 
 def resolve_to_string(value):
     if value is None:

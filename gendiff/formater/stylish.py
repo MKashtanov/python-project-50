@@ -1,57 +1,57 @@
+#!/usr/bin/env python3
 from gendiff.formater.common import resolve_to_string
 
 SEPARATOR = '    '
 
 
-def format_stylish(diff):
+def format_stylish(diff, level=1):
+    result = []
+    separator = get_full_separator(level)
+    if isinstance(diff, list):
+        for item in diff:
+            result.extend(make_lines(item, level))
+    elif isinstance(diff, dict):
+        '''item = [{'status': 'nested', 'nested' diff}]
+        result.extend(make_lines(item, level))'''
 
-    def inner(current_diff, level):
-        result = []
-        separator = get_full_separator(level)
-        if isinstance(current_diff, list):
-            for item in current_diff:
-                if item['status'] == 'nested':
-                    result.append(f'{separator}{item["key"]}: '
-                                  f'{inner(item["nested"], level + 1)}')
-                elif item['status'] == 'equal':
-                    result.append(f'{separator}{item["key"]}: '
-                                  f'{item["old_value"]}')
-                elif item['status'] == 'different':
-                    if 'old_value' in item.keys():
-                        if isinstance(item.get('old_value'), dict):
-                            result.append(
-                                f'{separator[:-2]}- {item["key"]}: '
-                                f'{inner(item.get("old_value"), level + 1)}')
-                        else:
-                            result.append(
-                                f'{separator[:-2]}- {item["key"]}: '
-                                f'{resolve_to_string(item.get("old_value"))}'
-                            )
-                    if 'new_value' in item.keys():
-                        if isinstance(item.get('new_value'), dict):
-                            result.append(
-                                f'{separator[:-2]}+ {item["key"]}: '
-                                f'{inner(item.get("new_value"), level + 1)}'
-                            )
-                        else:
-                            result.append(
-                                f'{separator[:-2]}+ {item["key"]}: '
-                                f'{resolve_to_string(item.get("new_value"))}'
-                            )
-        elif isinstance(current_diff, dict):
-            for key in sorted(list(current_diff.keys())):
-                value = current_diff.get(key)
-                if isinstance(value, dict):
-                    result.append(
-                        f'{separator}{key}: {inner(value, level + 1)}'
-                    )
-                else:
-                    result.append(f'{separator}{key}: {value}')
-        return ('{\n' + '\n'.join(result) + '\n' +
-                get_full_separator(level - 1) + '}')
+        for key in sorted(list(diff.keys())):
+            value = diff.get(key)
+            if isinstance(value, dict):
+                result.append(
+                    f'{separator}{key}: {format_stylish(value, level + 1)}'
+                )
+            else:
+                result.append(f'{separator}{key}: {value}')
+    return ('{\n' + '\n'.join(result) + '\n' +
+            get_full_separator(level - 1) + '}')
 
-    return inner(diff, 1)
+
+def make_lines(item, level):
+    result = []
+    status = item['status']
+    key = item['key']
+    separator = get_full_separator(level)
+    if status == 'nested':
+        result.append(f'{separator}{key}: '
+                      f'{make_stylish_line(item["nested"], level)}')
+    elif status == 'equal':
+        result.append(f'{separator}{key}: '
+                      f'{make_stylish_line(item["old_value"], level)}')
+    if status == 'deleted' or status == 'changed':
+        result.append(f'{separator[:-2]}- {key}: '
+                      f'{make_stylish_line(item["old_value"], level)}')
+    if status == 'added' or status == 'changed':
+        result.append(f'{separator[:-2]}+ {key}: '
+                      f'{make_stylish_line(item["new_value"], level)}')
+    return result
 
 
 def get_full_separator(level):
     return SEPARATOR * level
+
+
+def make_stylish_line(value, level):
+    if isinstance(value, (dict, list)):
+        return format_stylish(value, level + 1)
+    else:
+        return resolve_to_string(value)
