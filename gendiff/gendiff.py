@@ -14,7 +14,7 @@ def file_to_dict(path):
         low_path = str(path).lower()
         if low_path[-5:] == '.json':
             result = json.load(open(path))
-        if low_path[-5:] == '.yaml' or low_path[-4:] == '.yml':
+        elif low_path[-5:] == '.yaml' or low_path[-4:] == '.yml':
             result = yaml.load(open(path), Loader=yaml.FullLoader)
     return result
 
