@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 from pathlib import Path
 from gendiff.gendiff import generate_diff
 import pytest
@@ -18,7 +19,7 @@ test_data = [
     ('file3.yml', 'file4.yml', 'plain', 'result_file3_file4_plain'),
     ('file3.json', 'file4.json', 'json', 'result_file3_file4_json'),
     ('file3.yml', 'file4.yml', 'json', 'result_file3_file4_json'),
-    ]
+]
 
 
 @pytest.mark.parametrize('file1, file2, format_name, result_file', test_data)
