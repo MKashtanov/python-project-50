@@ -33,7 +33,7 @@ def make_line(item, path):
 def get_value(value):
     if isinstance(value, dict):
         return '[complex value]'
-    elif isinstance(value, bool) or value is None:
-        return resolve_to_string(value)
-    else:
+    elif isinstance(value, str):
         return f"'{value}'"
+    else:
+        return resolve_to_string(value)
