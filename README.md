@@ -20,7 +20,12 @@
 ### It can return result in some formats:
 - 'stylish' - by default
 - 'plain'
+- 'json'
 
 ### Use with format 'plain'
 
 [![asciicast](https://asciinema.org/a/Ju9cM4TmHHQo7POC5V4L3ZDVi.svg)](https://asciinema.org/a/Ju9cM4TmHHQo7POC5V4L3ZDVi)
+
+### Use with format 'json'
+
+[![asciicast](https://asciinema.org/a/CtY9xEmnbHmKfTVYGECzUROK8.svg)](https://asciinema.org/a/CtY9xEmnbHmKfTVYGECzUROK8)
