@@ -6,7 +6,7 @@ ONE_INDENT = '    '
 def format_stylish(diff, level=1):
     result = []
     for item in diff:
-        print(f'item={item}')
+        # print(f'item={item}')
         if not isinstance(item, dict):
             item = {'key': item, 'status': 'equal', 'old_value': diff[item]}
         result.extend(get_list_lines(item, level))
