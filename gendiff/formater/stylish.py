@@ -28,28 +28,21 @@ def get_list_lines(item, level):
                       f'{format_stylish(item["nested"], level+1)}')
     elif status == 'equal':
         result.append(f'{indent}{key}: '
-                      f'{get_value(old_value, level)}')
+                      f'{resolve_to_string(old_value)}')
     elif status == 'deleted':
         result.append(f'{indent[:-2]}- {key}: '
-                      f'{get_value(old_value, level)}')
+                      f'{resolve_to_string(old_value)}')
     elif status == 'added':
         result.append(f'{indent[:-2]}+ {key}: '
-                      f'{get_value(new_value, level)}')
+                      f'{resolve_to_string(new_value)}')
     elif status == 'changed':
         result.append(f'{indent[:-2]}- {key}: '
-                      f'{get_value(old_value, level)}')
+                      f'{resolve_to_string(old_value)}')
         result.append(f'{indent[:-2]}+ {key}: '
-                      f'{get_value(new_value, level)}')
+                      f'{resolve_to_string(new_value)}')
     else:
         raise ValueError('error in format diff')
     return result
-
-
-def get_value(value, level):
-    if isinstance(value, (dict,)):
-        return format_stylish(value, level + 1)
-    else:
-        return resolve_to_string(value)
 
 
 def get_indent(level):
