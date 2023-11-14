@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 from gendiff.formater.common import resolve_to_string
 
 
@@ -17,15 +16,18 @@ def format_plain(diff, path=''):
 
 
 def make_line(item, path):
-    action = ''
     status = item['status']
-    if status == 'added':
+    if status == 'equal':
+        return ''
+    elif status == 'added':
         action = f'added with value: {get_value(item["new_value"])}'
     elif status == 'deleted':
         action = 'removed'
     elif status == 'changed':
         action = (f'updated. From {get_value(item["old_value"])}'
                   f' to {get_value(item["new_value"])}')
+    else:
+        raise ValueError('error in format diff')
     result = '' if action == '' else f"Property '{path}' was {action}"
     return result
 

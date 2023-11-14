@@ -1,6 +1,3 @@
-#!/usr/bin/env python3
-
-
 def create_diff(tree1, tree2):
     result = []
     tree1_keys, tree2_keys = tree1.keys(), tree2.keys()

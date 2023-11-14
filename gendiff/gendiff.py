@@ -1,22 +1,32 @@
-#!/usr/bin/env python3
 import json
 import yaml
-import os
+from pathlib import Path
 from gendiff.comparator import create_diff
 from gendiff.formater.stylish import format_stylish
 from gendiff.formater.plain import format_plain
 from gendiff.formater.json import format_json
 
 
-def file_to_dict(path):
-    result = {}
-    if os.path.isfile(path):
-        low_path = str(path).lower()
-        if low_path[-5:] == '.json':
-            result = json.load(open(path))
-        elif low_path[-5:] == '.yaml' or low_path[-4:] == '.yml':
-            result = yaml.load(open(path), Loader=yaml.FullLoader)
+def get_data_from_file(path):
+    f = open(path, 'r')
+    data = f.read()
+    return data
+
+
+def data_to_dict(data, ext):
+    if ext == '.json':
+        result = json.loads(data)
+    elif ext == '.yaml' or ext == '.yml':
+        result = yaml.load(data, Loader=yaml.FullLoader)
+    else:
+        raise ValueError('not support format file')
     return result
+
+
+def file_to_dict(path):
+    data = get_data_from_file(path)
+    ext = Path(path).suffix
+    return data_to_dict(data, ext)
 
 
 def generate_diff(file_path1, file_path2, format_name='stylish'):
@@ -33,3 +43,5 @@ def get_formatted_diff(diff, format_name='stylish'):
         return format_plain(diff)
     elif format_name == 'json':
         return format_json(diff)
+    else:
+        raise ValueError('not support formatted name')
