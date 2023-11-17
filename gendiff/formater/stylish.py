@@ -61,5 +61,6 @@ def dict_to_str(dict_, level):
     result += get_indent(level) + '}'
     return result
 
+
 def get_indent(level):
     return ONE_INDENT * level

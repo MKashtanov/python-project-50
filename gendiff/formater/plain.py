@@ -7,7 +7,7 @@ def format_plain(diff, path=''):
         key = item['key']
         current_path = f'{path}.{key}' if path != '' else key
         lines = make_line(item, current_path)
-        if lines != None:
+        if lines is not None:
             result.append(lines)
     return '\n'.join(result)
 
