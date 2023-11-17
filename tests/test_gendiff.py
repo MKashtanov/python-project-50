@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 from pathlib import Path
 from gendiff.gendiff import generate_diff
 import pytest

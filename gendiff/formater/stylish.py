@@ -6,8 +6,6 @@ ONE_INDENT = '    '
 def format_stylish(diff, level=1):
     result = []
     for item in diff:
-        if not isinstance(item, dict):
-            item = {'key': item, 'status': 'equal', 'old_value': diff[item]}
         result.extend(get_list_lines(item, level))
     result.insert(0, '{')
     result.append(get_indent(level - 1) + '}')
@@ -46,10 +44,22 @@ def get_list_lines(item, level):
 
 def get_value(value, level):
     if isinstance(value, dict):
-        return format_stylish(value, level + 1)
+        return dict_to_str(value, level)
     else:
         return resolve_to_string(value)
 
+
+def dict_to_str(dict_, level):
+    result = '{\n'
+    for key in sorted(dict_.keys()):
+        value = dict_[key]
+        if isinstance(value, dict):
+            line = dict_to_str(value, level + 1)
+        else:
+            line = resolve_to_string(value)
+        result += f'{get_indent(level + 1)}{key}: {line}\n'
+    result += get_indent(level) + '}'
+    return result
 
 def get_indent(level):
     return ONE_INDENT * level

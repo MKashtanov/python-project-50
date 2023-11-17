@@ -6,11 +6,8 @@ def format_plain(diff, path=''):
     for item in diff:
         key = item['key']
         current_path = f'{path}.{key}' if path != '' else key
-        if item['status'] == 'nested':
-            lines = format_plain(item['nested'], current_path)
-        else:
-            lines = make_line(item, current_path)
-        if lines != '':
+        lines = make_line(item, current_path)
+        if lines != None:
             result.append(lines)
     return '\n'.join(result)
 
@@ -18,7 +15,9 @@ def format_plain(diff, path=''):
 def make_line(item, path):
     status = item['status']
     if status == 'equal':
-        return ''
+        return None
+    elif status == 'nested':
+        return format_plain(item['nested'], path)
     elif status == 'added':
         action = f'added with value: {get_value(item["new_value"])}'
     elif status == 'deleted':
@@ -28,7 +27,7 @@ def make_line(item, path):
                   f' to {get_value(item["new_value"])}')
     else:
         raise ValueError('error in format diff')
-    result = '' if action == '' else f"Property '{path}' was {action}"
+    result = f"Property '{path}' was {action}"
     return result
 
 
